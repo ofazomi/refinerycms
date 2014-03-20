@@ -11,6 +11,9 @@ gem 'quiet_assets'
 # Add support for refinerycms-acts-as-indexed
 gem 'refinerycms-acts-as-indexed', github: 'refinery/refinerycms-acts-as-indexed'
 
+# Add the default visual editor.
+gem 'refinerycms-wymeditor', github: 'parndt/refinerycms-wymeditor', branch: 'take-2'
+
 gem 'seo_meta', github: 'parndt/seo_meta', branch: 'master'
 
 # Database Configuration

@@ -84,9 +84,6 @@ module Refinery
         app.config.assets.precompile += [
           "refinery/*",
           "refinery/icons/*",
-          "wymeditor/lang/*",
-          "wymeditor/skins/refinery/*",
-          "wymeditor/skins/refinery/**/*",
           "modernizr-min.js",
           "admin.js"
         ]
