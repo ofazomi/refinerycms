@@ -2,9 +2,7 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'rails', '~> 4.1.0.rc2'
-gem 'friendly_id', github: 'norman/friendly_id', branch: 'master'
-gem 'friendly_id-globalize', github: 'norman/friendly_id-globalize', branch: 'master'
+gem 'rails', '~> 4.1.0'
 gem 'refinerycms-i18n', github: 'refinery/refinerycms-i18n', branch: 'master'
 gem 'quiet_assets'
 
