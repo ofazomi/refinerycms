@@ -1,5 +1,4 @@
 require "spec_helper"
-require "httparty"
 
 module Refinery
   describe "AdminImages" do
@@ -126,7 +125,7 @@ module Refinery
       end
 
       context "page" do
-        # Regression test for #2552
+        # Regression test for #2552 (https://github.com/refinery/refinerycms/issues/2552)
         let :page_for_image do
           page = Refinery::Page.create :title => "Add Image to me"
           # we need page parts so that there's wymeditor
@@ -148,40 +147,17 @@ module Refinery
             find(:css, '#existing_image_size_area #image_dialog_size_0').click
             click_button ::I18n.t('button_text', :scope => 'refinery.admin.images.existing_image')
           end
-
-          # check that image loads before save
-          page.within_frame('WYMeditor_0') do
-            img = first('img')
-            img[:naturalWidth].should_not be 0
-            response = HTTParty.get(img[:src])
-            response.code.should == 200
-          end
-
-          #save page
           click_button "Save"
-
-          # check that image loads after save
-          visit refinery.edit_admin_page_path(page_for_image)
-          page.within_frame('WYMeditor_0') do
-            img = first('img')
-            img[:naturalWidth].should_not be 0
-            response = HTTParty.get(img[:src])
-            response.code.should == 200
-          end
 
           # update the image
           visit refinery.edit_admin_image_path(image)
           attach_file "image_image", Refinery.roots('refinery/images').join("spec/fixtures/beach.jpeg")
-          click_button ::I18n.t('save', :scope => 'refinery.admin.form_actions')
+          click_button "Save"
 
           # check that image loads after it has been updated
-          visit refinery.edit_admin_page_path(page_for_image)
-          page.within_frame('WYMeditor_0') do
-            img = first('img')
-            img[:naturalWidth].should_not be 0
-            response = HTTParty.get(img[:src])
-            response.code.should == 200
-          end
+          visit refinery.url_for(page_for_image.url)
+          visit find(:css, 'img[src^="/system"]')[:src]
+          expect { page }.to_not have_content('Not found')
         end
       end
 
